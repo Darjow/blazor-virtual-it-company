@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Components.Web
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<AuthorizeView>
+    <Authorized>
+        <button class="button is-light" @onclick="BeginSignOut">
+            <strong>Uitloggen</strong>
+        </button>
+    </Authorized>
+    <NotAuthorized>
+        <a class="button is-primary" @onclick="BeginSignIn">
+            <strong>Inloggen</strong>
+        </a>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
+    }
+    private async Task BeginSignIn(MouseEventArgs args)
+    {
+        Navigation.NavigateTo("authentication/login");
+    }
+}

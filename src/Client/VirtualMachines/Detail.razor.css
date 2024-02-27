@@ -1,0 +1,14 @@
+﻿.card{
+    height: 250px;
+}
+.card-body {
+    padding: 1rem;
+}
+
+.card-header {
+    background-color: black;
+}
+
+.card-header-title {
+    color: white;
+}

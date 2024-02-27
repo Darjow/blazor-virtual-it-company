@@ -1,0 +1,35 @@
+@page "/servers/{Id:int}"
+@using Client.Servers.Component
+@attribute [Authorize("Admin")]
+
+<h5>Virtualmachines van server</h5>
+<div class="accordion">
+    @foreach (var vm in virtualMachinesServer)
+    {
+        <div class="card w-100 mb-3 @(Collapsed.ContainsKey(vm.Id) && Collapsed[vm.Id]? "active": "")" data-test-id="vm-item">
+            <header class="card-header" @onclick="@(() => Toggle(vm.Id))">
+                <p class="card-header-title">@vm.Id. @vm.Name</p>
+                <button class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="oi @(Collapsed.ContainsKey(vm.Id) && Collapsed[vm.Id] ? "fa-solid fa-chevron-down" : "fa-solid fa-chevron-right")" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </header>
+            @if (Loading.Contains(vm.Id))
+            {
+                <div class="card-body center">
+                    <span class="icon is-large">
+                        <i class="fas fa-lg fa-solid fa-spinner fa-spin"></i>
+                    </span>
+                </div>
+            }
+            else if (Collapsed.ContainsKey(vm.Id) && Collapsed[vm.Id])
+            {
+                <div class="card-body">
+                    <Grafiek Id="vm.Id"></Grafiek>
+                </div>
+            }
+        </div>
+    }
+
+</div>

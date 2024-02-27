@@ -1,0 +1,18 @@
+﻿﻿.card-body {
+    padding: 1rem;
+}
+
+.card-header {
+    background-color: black;
+}
+
+.card-header-title {
+    color: white;
+}
+
+.form-container {
+    display: flex;
+    height: 100px;
+    align-items: center;
+    margin-bottom: 3rem;
+}

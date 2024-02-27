@@ -1,0 +1,31 @@
+﻿@using System.Security.Claims;
+@inject AuthenticationProvider fakeAuthProvider
+
+
+<div>
+    <p>Mogelijke inlog opties: </p>
+    <button @onclick="SetAnon">Guest</button>
+    <button @onclick="SetKlant">Klant</button>
+    <button @onclick="SetAdminCons">Admin - Consulteren</button>
+    <button @onclick="SetAdminBeh">Admin - Beheren</button>
+    <p>Ingelogd als: @fakeAuthProvider.Current.FindFirst(ClaimTypes.Name)?.Value</p>
+</div>
+
+@code {
+    void SetAnon()
+    {
+        fakeAuthProvider.ChangeAuthenticationState(AuthenticationProvider.Anonymous);
+    }
+    void SetKlant()
+    {
+        fakeAuthProvider.ChangeAuthenticationState(AuthenticationProvider.Customer("Klant", "klant@gmail.com",4));
+    }
+    void SetAdminCons()
+    {
+        fakeAuthProvider.ChangeAuthenticationState(AuthenticationProvider.Admin("Consultant Adm", "adminconsultant@gmail.com", Domain.Users.AdminRole.CONSULTEREN,3));
+    }
+    void SetAdminBeh()
+    {
+        fakeAuthProvider.ChangeAuthenticationState(AuthenticationProvider.Admin("Beheer Adm", "adminbeheer@gmail.com", Domain.Users.AdminRole.BEHEREN,2));
+    }
+}

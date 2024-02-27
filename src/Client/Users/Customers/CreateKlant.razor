@@ -1,0 +1,221 @@
+﻿@page "/register"
+@using Domain.Users;
+
+<EditForm Model="model" OnValidSubmit="RegistreerKlant">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h1 class="title is-3">Gebruiker</h1>
+    <div class="field columns">
+        <div class="column">
+            <label for="firstName" class="label">Voornaam</label>
+            <p class="control has-icons-left">
+                <InputText class="input" placeholder="Jan" @bind-Value="model.FirstName" />
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </p>
+        </div>
+        <div class="column">
+            <label for="lastName" class="label">Achternaam</label>
+            <p class="control has-icons-left">
+                <InputText class="input" placeholder="Jansens" @bind-Value="model.Name" />
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </p>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Email</label>
+                <p class="control has-icons-left">
+                    <InputText class="input" placeholder="user@example.be" @bind-Value="model.Email" />
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="field">
+                <label class="label">Telefoon</label>
+                <p class="control has-icons-left">
+                    <InputText class="input" placeholder="Telefoonnummer" @bind-Value="model.PhoneNumber" />
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-phone"></i>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Wachtwoord</label>
+        <p class="control has-icons-left">
+            <InputText class="input" type="password" placeholder="Wachtwoord" @bind-Value="model.Password" />
+            <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <label class="label">Relatie</label>
+        <div class="control">
+            <label class="radio">
+                <input type="radio" name="relation" checked @onchange="toggleRelation">
+                Intern
+            </label>
+            <label class="radio">
+                <input type="radio" name="relation" @onchange="toggleRelation">
+                Extern
+            </label>
+        </div>
+    </div>
+    @if (isIntern)
+    {
+        <div class="field">
+            <label class="label">Opleiding</label>
+            <div class="control has-icons-left">
+                <div class="select is-primary">
+                    <InputSelect @bind-Value="model.Opleiding">
+                        <option value="@Course.TOEGEPASTE_INFORMATICA">IT & Digitale Inovatie</option>
+                        <option value="@Course.AGRO_EN_BIOTECHNOLOGIE">Agro- & Biotechnologie</option>
+                        <option value="@Course.BIOMEDISCHE_LABORATORIUMTECHNOLOGIE">Biomedische Laboratoriumtechnologie</option>
+                        <option value="@Course.CHEMIE">Chemie</option>
+                        <option value="@Course.DIGITAL_DESIGN_AND_DEVELOPMENT">Digital Design & Development</option>
+                        <option value="@Course.ELEKTROMECHANICA">Electromechanica</option>
+                    </InputSelect>
+                </div>
+                <div class="icon is-small is-left">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="field">
+            <div class="columns">
+                <div class="column">
+                    <label class="label">Bedrijf</label>
+                    <p class="control has-icons-left has-icons-right">
+                        <InputText class="input" placeholder="Bedrijfsnaam" @bind-Value="model.Bedrijf" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-briefcase"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Type</label>
+                    <div class="control has-icons-left">
+                        <div class="select is-primary is-fullwidth">
+                            <InputSelect @bind-Value="model.Type">
+                                <option value="@BedrijfType.VOKA">VOKA</option>
+                                <option value="@BedrijfType.UNISEF">UNISEF</option>
+                            </InputSelect>
+                        </div>
+                        <div class="icon is-small is-left">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="title is-4">Contactpersoon</h1>
+        <div class="field columns">
+            <div class="column">
+                <label class="label">Voornaam</label>
+                <p class="control has-icons-left">
+                    <InputText class="input" placeholder="Jan" @bind-Value="model.Contactpersoon.FirstName" />
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </p>
+            </div>
+            <div class="column">
+                <label class="label">Achternaam</label>
+                <p class="control has-icons-left">
+                    <InputText class="input" placeholder="Jansens" @bind-Value="model.Contactpersoon.LastName" />
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label">Email</label>
+                    <p class="control has-icons-left">
+                        <InputText class="input" placeholder="user@example.be" @bind-Value="model.Contactpersoon.Email" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label">Telefoon</label>
+                    <p class="control has-icons-left has-icons-right">
+                        <InputText class="input" placeholder="Telefoonnummer" @bind-Value="model.Contactpersoon.PhoneNumber" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <h1 class="title is-4">Reserve Contactpersoon</h1>
+        <div class="field columns">
+            <div class="column">
+                <label class="label">Voornaam</label>
+                <p class="control has-icons-left">
+                    <InputText class="input" placeholder="Jan" @bind-Value="model.ReserveContactpersoon.FirstName" />
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </p>
+            </div>
+            <div class="column">
+                <label class="label">Achternaam</label>
+                <p class="control has-icons-left">
+                    <InputText class="input" placeholder="Jansens" @bind-Value="model.ReserveContactpersoon.LastName" />
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label">Email</label>
+                    <p class="control has-icons-left">
+                        <InputText class="input" placeholder="user@example.be" @bind-Value="model.ReserveContactpersoon.Email" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label">Telefoon</label>
+                    <p class="control has-icons-left">
+                        <InputText class="input" placeholder="Telefoonnummer" @bind-Value="model.ReserveContactpersoon.PhoneNumber" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+    <button class="button is-rechts is-success" type="submit" @onclick="RegistreerKlant">
+        <span class="icon is-small">
+            <i class="fas fa-check"></i>
+        </span>
+        <span>Account aanmaken</span>
+    </button>
+</EditForm>

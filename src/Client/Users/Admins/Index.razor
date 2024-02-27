@@ -1,0 +1,46 @@
+﻿@page "/beheerders"
+@attribute [Authorize("Admin")]
+
+@if (Loading)
+{
+    <div class="card-body center">
+        <span class="icon is-large">
+            <i class="fas fa-lg fa-solid fa-spinner fa-spin"></i>
+        </span>
+    </div>
+}
+else if (Admins is null || Admins.Count() == 0)
+{
+
+    <p>Geen admins...</p>
+}
+else
+{
+    <div class="card-body table is-striped is-hoverable">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Naam</th>
+                    <th>Functie</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            @foreach (var ad in Admins)
+            {
+                <tbody>
+                    <tr>
+                        <td>@ad.Id</td>
+                        <td>@ad.FirstName @ad.Name</td>
+                        <td>@ad.Role.ToString()</td>
+                        <td>@ad.Email</td>
+                    </tr>
+
+                </tbody>
+            }
+        </table>
+    </div>
+
+}
+
+                        

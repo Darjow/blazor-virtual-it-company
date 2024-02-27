@@ -1,0 +1,15 @@
+﻿
+<div>
+    @if (Loading)
+    {
+        <div class="card-body center">
+            <span class="icon is-large">
+                <i class="fas fa-lg fa-solid fa-spinner fa-spin"></i>
+            </span>
+        </div>
+    }
+    else
+    {
+        <Client.Servers.Component.Graph Data="_data" />
+    }
+</div>

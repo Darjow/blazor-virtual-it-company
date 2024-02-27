@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Domain.VirtualMachines.Backup">
+    <Position X="3.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAIAAAAACAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>VirtualMachines\Backup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.VirtualMachines.VirtualMachine">
+    <Position X="13.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAYAAAAEAQiCACAQAAIAAEAAAAAAIAAEAAAg=</HashCode>
+      <FileName>VirtualMachines\VirtualMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.VirtualMachines.VirtualMachineFaker">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VirtualMachines\VirtualMachineFaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.VirtualMachines.VirtualMachineManager">
+    <Position X="15.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAIAAgIAAAAAAAAAAAgAAAAAgAgA=</HashCode>
+      <FileName>VirtualMachines\VirtualMachineManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Common.VMConnection">
+    <Position X="8.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAACAAACIQAAAAAAAAAAgAACAAIQAAAAAAA=</HashCode>
+      <FileName>VirtualMachines\VMConnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Common.Entity">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAQAgAEAAAAAAAAAAIAAAAAAAAAAAiA=</HashCode>
+      <FileName>Common\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Common.Hardware">
+    <Position X="6" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAIAAAAAAAAAAAAIAAAgAgAAAAggA=</HashCode>
+      <FileName>Common\Hardware.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Users.Beheerder">
+    <Position X="9.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Users\Beheerder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Users.ExterneKlant">
+    <Position X="6.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Users\ExterneKlant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Users.InterneKlant">
+    <Position X="5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Users\InterneKlant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Users.User">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAEAAKQAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Users\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Gebruiker">
+    <Position X="7" Y="2" Width="1.5" />
+    <InheritanceLine Type="Domain.Common.Entity" FixedToPoint="true">
+      <Path>
+        <Point X="7.75" Y="1.854" />
+        <Point X="7" Y="1.854" />
+        <Point X="7" Y="2" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAQCIAAAACAAAAAAAAAAQAQAAAAAAAADAAAAAAAAAAE=</HashCode>
+      <FileName>Users\Gebruiker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.ValueObject">
+    <Position X="6.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAoAAAAAAAAAAAAIAAAAAAAACAAAA=</HashCode>
+      <FileName>Common\ValueObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Projecten.Project">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAigQAAACAAAQQAAAAAAAAAAAAAAAAACAE=</HashCode>
+      <FileName>Projecten\Project.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Validators.Validator">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Validators\Validator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Contract.VMContract">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAQAIAIAAAAAAAAwAAAAABCAAAAAAEAAAAA=</HashCode>
+      <FileName>Contract\VMContract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Server.FysiekeServer">
+    <Position X="11.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADIAEEAAECAAAAAAAIBQAQAABCAQAAABCAAAAAAQA=</HashCode>
+      <FileName>Server\FysiekeServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Domain.VirtualMachines.BackUpType">
+    <Position X="18.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAACBAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>VirtualMachines\BackupType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Domain.VirtualMachines.OperatingSystemEnum">
+    <Position X="17.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAABAAAAAAAAAIAAIE=</HashCode>
+      <FileName>VirtualMachines\OperatingSystemEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Domain.VirtualMachines.VirtualMachineMode">
+    <Position X="19.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIAAAAAAAAAAAAIAAQQAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>VirtualMachines\VirtualMachineMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Domain.Users.AdminRole">
+    <Position X="16.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Users\AdminRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Domain.Users.Course">
+    <Position X="19.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAgAAAAAAAAAAIAAAAAAAAAAgAAAAEAIAA=</HashCode>
+      <FileName>Users\Course.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,124 @@
+﻿@page "/virtualmachines"
+@using Domain.VirtualMachines.VirtualMachine
+
+@attribute [Authorize]
+
+
+@if (_projects is null)
+{
+    <p>Even geduld ...</p>
+}
+else if (_projects.Count() == 0)
+{
+    <p>Je hebt geen projecten.</p>
+}
+else
+{
+    <h1 class="title is-3">Virtual Machines</h1>
+
+    <div class="accordion">
+        @foreach (var project in _projects)
+        {
+            <div class="card w-100 my-4 @(Collapsed.ContainsKey(project.Id) && Collapsed[project.Id]? "active": "")"  data-test-id="project-item">
+                <header class="card-header" @onclick="@(() => Toggle(project.Id))" data-test-id="toggle-project">
+                    <p class="card-header-title">@project.Id. @project.Name</p>
+                    <button class="card-header-icon" aria-label="more options">
+                        <span class="icon">
+                            <i class="oi @(Collapsed.ContainsKey(project.Id) && Collapsed[project.Id] ? "fa-solid fa-chevron-down" : "fa-solid fa-chevron-right")" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </header>
+                @if (Loading.Contains(project.Id))
+                {
+                    <div class="card-body center">
+                        <span class="icon is-large">
+                            <i class="fas fa-lg fa-solid fa-spinner fa-spin"></i>
+                        </span>
+                    </div>
+                }
+
+                else if (Collapsed.ContainsKey(project.Id) && Collapsed[project.Id])
+                {
+                    if (_details.ContainsKey(project.Id))
+                    {
+                        if (_details[project.Id].VirtualMachines.Count() > 0)
+                        {
+                            <div class="card-body table is-striped is-hoverable" data-test-id="vm-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Virtual Machine</th>
+                                            <th>Klant</th>
+                                            <th>Acties</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var vm in _details[project.Id].VirtualMachines)
+                                        {
+
+                                            <tr data-test-id="vm-item">
+                                                <td><span class="@vm.Mode.GetDotIcon()"></span>@vm.Mode.GetString()</td>
+                                                <td>@vm.Name</td>
+                                                <td>@(project.User.FirstName + " " + project.User.Name)</td>
+                                                <td>
+                                                    <button @onclick="() => NavigateToVMDetails(vm.Id)">Details</button>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-body">
+                                <p>/</p>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        }
+    </div>
+}
+
+
+@code {
+
+    public Dictionary<int, bool> Collapsed { get; set; } = new Dictionary<int, bool>();
+    public List<int> Loading { get; set; } = new();
+
+    private void ToggleFilterForm()
+    {
+        if (Sidepanel.IsOpen) Sidepanel.Close();
+        else Sidepanel.Open<Client.VirtualMachines.Components.VMFilter>("Virtual Machines", "Filter");
+    }
+
+    public async void Toggle(int id)
+    {
+        bool check = false;
+
+        if (!Collapsed.ContainsKey(id))
+        {
+            check = true;
+            Collapsed.Add(id, true);
+        }
+        else
+        {
+            Collapsed[id] = !Collapsed[id];
+        }
+
+        if (check)
+        {
+            Loading.Add(id);
+            await GetVirtualMachines(id);
+            Loading.Remove(id);
+        }
+        StateHasChanged();
+    }
+
+
+
+}

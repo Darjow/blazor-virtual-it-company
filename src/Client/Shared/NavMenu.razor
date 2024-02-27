@@ -1,0 +1,171 @@
+﻿@using System.Security.Claims;
+﻿<div class="top-row ps-3 navbar has-background-black">
+    <h3 class="title is-4 logo">Virtual IT Company</h3>
+    <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <AuthorizeView>
+            <NotAuthorized>
+                <div class="nav-item px-2">
+                    <NavLink class="nav-link subtitle is-6" href="login">
+                        <span class="icon-text">
+                            <span class="icon is-medium">
+                                <i class="fas fa-sharp fa-solid fa-user"></i>
+                            </span>
+                            <span class="navtab-name">Log in</span>
+                        </span>
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+        <AuthorizeView Roles="Customer">
+            <Authorized>
+                <div class="nav-item px-2">
+                    <NavLink class="nav-link subtitle is-6" onclick="@NavToProfile" data-test-id="nav-profile"
+                             Match="NavLinkMatch.All">
+                        <span class="icon-text">
+                            <span class="icon is-medium">
+                                <i class="fas fa-sharp fa-solid fa-user"></i>
+                            </span>
+                            <span class="navtab-name">Profiel</span>
+                        </span>
+                    </NavLink>
+                </div>
+                <div class="nav-item px-2">
+                    <NavLink class="nav-link subtitle is-6" href="virtualmachines" Match="NavLinkMatch.All">
+                        <span class="icon-text">
+                            <span class="icon is-medium">
+                                <i class="fas fa-computer"></i>
+                            </span>
+                            <span class="navtab-name">Virtual Machines</span>
+                        </span>
+                    </NavLink>
+                </div>
+                <div class="nav-item px-2">
+                    <NavLink class="nav-link subtitle is-6" href="virtualmachines/add">
+                        <span class="icon-text">
+                            <span class="icon is-medium">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="navtab-name">Vraag Virtual Machine aan</span>
+                        </span>
+                    </NavLink>
+                </div>
+              </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-2">
+                <NavLink class="nav-link subtitle is-6" href="virtualmachines" Match="NavLinkMatch.All">
+                    <span class="icon-text">
+                        <span class="icon is-medium">
+                            <i class="fas fa-computer"></i>
+                        </span>
+                        <span class="navtab-name">Virtual Machines</span>
+                    </span>
+                </NavLink>
+            </div>
+            <div class="nav-item px-2">
+                <NavLink class="nav-link subtitle is-6" href="klanten">
+                    <span class="icon-text">
+                        <span class="icon is-medium">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <span class="navtab-name">Klanten</span>
+                    </span>
+                </NavLink>
+            </div>
+            <div class="nav-item px-2">
+                <NavLink class="nav-link subtitle is-6" href="beheerders">
+                    <span class="icon-text">
+                        <span class="icon is-medium">
+                            <i class="fas fa-solid fa-users-gear"></i>
+                        </span>
+                        <span class="navtab-name">Beheerders</span>
+                    </span>
+                </NavLink>
+            </div>
+            <div class="nav-item px-2">
+                <NavLink class="nav-link subtitle is-6" href="servers">
+                    <span class="icon-text">
+                        <span class="icon is-medium">
+                            <i class="fas fa-sharp fa-solid fa-server"></i>
+                        </span>
+                        <span class="navtab-name">Servers</span>
+                    </span>
+                </NavLink>
+            </div>
+            <div class="nav-item px-2">
+                <NavLink class="nav-link subtitle is-6" href="beschikbaarheid">
+                    <span class="icon-text">
+                        <span class="icon is-medium">
+                            <i class="fas fa-solid fa-calendar-days"></i>
+                        </span>
+                        <span class="navtab-name">Beschikbaarheden</span>
+                    </span>
+                </NavLink>
+            </div>
+        </AuthorizeView>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-2">
+                    <NavLink class="nav-link subtitle is-6" href="logout">
+                        <span class="icon-text">
+                            <span class="icon is-medium">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </span>
+                            <span class="navtab-name">Log uit</span>
+                        </span>
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+    </nav>
+</div>
+
+
+@code {
+    [Inject] AuthenticationStateProvider provider { get; set; }
+    [Inject] NavigationManager nav { get; set; }
+
+    private int Id = 0;
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await provider.GetAuthenticationStateAsync();
+        string claim;
+
+        try
+        {
+            claim = user.User.Claims.First(e => e.Type == ClaimTypes.NameIdentifier)?.Value;
+        }catch(Exception e){
+            claim = null;
+        }
+
+        if(claim != null)
+        {
+            Id = Int32.Parse(claim.ToString());
+        }
+
+
+    }
+    private void NavToProfile()
+    {
+        nav.NavigateTo($"/klant/{Id}");
+    }
+
+}

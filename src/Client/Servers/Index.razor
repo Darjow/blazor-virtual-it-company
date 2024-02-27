@@ -1,0 +1,41 @@
+﻿@page "/servers"
+
+@attribute [Authorize("Admin")]
+
+@if (Servers is null)
+{
+    <p>Even geduld ...</p>
+}
+else
+{
+    <h1 class="is-title-3">Fysieke Servers</h1>
+    <div class="columns is-desktop is-multiline">
+        @foreach (var server in Servers)
+        {
+            <div class="column is-one-third-widescreen is-half-desktop" data-test-id="server-item">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-header-title">@server.Name</h3>
+                        <div class="card-header-icon">
+                            <i class="fa-solid fa-square-poll-vertical fa-2x" @onclick="() => RedirectToDetailsPage(server.Id)"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Id: @server.Id</p>
+                        <p>Naam: @server.Name</p>
+                        <p>Serveradres: @server.ServerAddress</p>
+                        <br>
+                        <p>Aantal vCPU's: @server.Hardware.Amount_vCPU</p>
+                        <p>Vrije vCPU's: @server.HardWareAvailable.Amount_vCPU</p>
+                        <p>Totale opslag: @(server.Hardware.Storage > 1000000 ? ((double)server.Hardware.Storage / 1000000.00).ToString("#.##") + " TB" : server.Hardware.Storage > 1000 ? ((double)server.Hardware.Storage / 1000.00).ToString("#.##") + " GB" : server.Hardware.Storage + " MB")  </p>
+                        <p>Vrije opslag: @(server.HardWareAvailable.Storage > 1000000 ? ((double)server.HardWareAvailable.Storage / 1000000.00).ToString("#.##") + " TB" : server.HardWareAvailable.Storage > 1000 ? ((double)server.HardWareAvailable.Storage / 1000.00).ToString("#.##") + " GB" : server.HardWareAvailable.Storage + " MB")</p>
+                        <p>Totale memory: @(server.Hardware.Memory > 1000 ? (server.Hardware.Memory / 1000.00).ToString("#.##") + " GB" : server.Hardware.Memory + " GB")</p>
+                        <p>Vrije memory: @(server.HardWareAvailable.Memory > 1000 ? (server.HardWareAvailable.Memory / 1000.00).ToString("#.##") + " GB" : server.HardWareAvailable.Memory + " MB") </p>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+}

@@ -1,0 +1,130 @@
+﻿
+
+
+<aside>
+<div class="field">
+    <label class="label has-text-grey " @onclick="@(e => collapseStatusFilter = !collapseStatusFilter)">Status</label>
+    <div class="control has-icons-left columns @StatusFilterCssClass">
+        <div class="column">
+            <input type="checkbox" id="actiefStatus" name="actiefStatus" value="Actief">
+            <label for="actiefStatus"> Actief</label><br>
+        </div>
+        <div class="column">
+            <input type="checkbox" id="gestoptStatus" name="gestoptStatus" value="Gestopt">
+            <label for="gestoptStatus"> Gestopt</label><br>
+        </div>
+        <div class="column">
+            <input type="checkbox" id="pauzeStatus" name="pauzeStatus" value="Pauze">
+            <label for="pauzeStatus"> Pauze</label><br>
+        </div>
+    </div>
+</div>
+
+<div class="field">
+    <label class="label has-text-grey" @onclick="@(e => collapseZoektermFilter = !collapseZoektermFilter)">Zoekterm</label>
+    <div class="control has-icons-left @ZoektermFilterCssClass">
+        <input class="input" type="search" placeholder="Zoeken...">
+        <span class="icon is-left">
+            <i class="fas fa-search" aria-hidden="true"></i>
+        </span>
+    </div>
+</div>
+
+<div class="field">
+    <label class="label has-text-grey" @onclick="@(e => collapseOSFilter = !collapseOSFilter)">Besturingssysteem</label>
+    <div class="control is-expanded @OSFilterCssClass">
+        <div class="select is-fullwidth">
+            <select>
+                <option>Selecteer Besturingssysteem</option>
+                <option>Windows</option>
+                <option>MacOS</option>
+                <option>Android</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="field">
+    <label class="label has-text-grey" @onclick="@(e => collapseHardwareFilter = !collapseHardwareFilter)">Hardware</label>
+    <div class="subfilter @HardwareFilterCssClass">
+        <label class="label has-text-grey">Geheugen</label>
+        <div class="field columns">
+            <div class="column">
+                <label class="has-text-grey">Min. Prijs</label>
+                <div class="control is-expanded has-icons-left">
+                    <input class="input has-text-right" type="number" placeholder="0.00" min="0">
+                    <span class="icon is-left">
+                        <i class="fas fa-euro"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="has-text-grey">Max. Prijs</label>
+                <div class="control is-expanded has-icons-left">
+                    <input class="input has-text-right" type="number" placeholder="0.00" min="0">
+                    <span class="icon is-left">
+                        <i class="fas fa-euro"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <label class="label has-text-grey">Opslag</label>
+        <div class="field columns">
+            <div class="column">
+                <label class="has-text-grey">Min. Prijs</label>
+                <div class="control is-expanded has-icons-left">
+                    <input class="input has-text-right" type="number" placeholder="0.00" min="0">
+                    <span class="icon is-left">
+                        <i class="fas fa-euro"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="has-text-grey">Max. Prijs</label>
+                <div class="control is-expanded has-icons-left">
+                    <input class="input has-text-right" type="number" placeholder="0.00" min="0">
+                    <span class="icon is-left">
+                        <i class="fas fa-euro"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <label class="label has-text-grey">CPU's'</label>
+        <div class="field columns">
+            <div class="column">
+                <label class="has-text-grey">Min. Prijs</label>
+                <div class="control is-expanded has-icons-left">
+                    <input class="input has-text-right" type="number" placeholder="0.00" min="0">
+                    <span class="icon is-left">
+                        <i class="fas fa-euro"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="has-text-grey">Max. Prijs</label>
+                <div class="control is-expanded has-icons-left">
+                    <input class="input has-text-right" type="number" placeholder="0.00" min="0">
+                    <span class="icon is-left">
+                        <i class="fas fa-euro"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</aside>
+@code {
+    private bool collapseStatusFilter = false;
+    private bool collapseZoektermFilter = false;
+    private bool collapseOSFilter = false;
+    private bool collapseHardwareFilter = false;
+
+    private string? StatusFilterCssClass => collapseStatusFilter ? "collapse" : null;
+    private string? ZoektermFilterCssClass => collapseZoektermFilter ? "collapse" : null;
+    private string? OSFilterCssClass => collapseOSFilter ? "collapse" : null;
+    private string? HardwareFilterCssClass => collapseHardwareFilter ? "collapse" : null;
+
+}

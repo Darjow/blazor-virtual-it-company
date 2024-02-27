@@ -1,0 +1,151 @@
+﻿@page "/virtualmachine/{Id:int}"
+@attribute [Authorize]
+
+@if (!Initialized)
+{
+    <p>Even geduld...</p>
+}
+else if (Virtualmachine.Id == -1)
+{
+    <p>Je hebt een verkeerde Id meegegeven. Of deze VM werd niet teruggevonden (error).</p>
+}
+else
+{
+    <h1>Detailpagina</h1>
+    <div class="columns is-desktop is-multiline">
+        <div class="column is-one-third-widescreen is-half-desktop">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-header-title">Algemeen</h3>
+                </div>
+                <div class="card-body">
+                    <p>ID: @Virtualmachine.Id</p>
+                    <p>Naam: @FormatCapitalLetter(Virtualmachine.Name)</p>
+                    <p>Operating System: @FormatCapitalLetter(@Virtualmachine.OperatingSystem.ToString())</p>
+                    <p>Status: @Virtualmachine.Mode.GetString()</p>
+                </div>
+            </div>
+        </div>
+        <div class="column is-one-third-widescreen is-half-desktop">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-header-title">Back Up</h3>
+                </div>
+                <div class="card-body">
+                    <p>Backup Type: @FormatCapitalLetter(Virtualmachine.BackUp.Type.GetString())</p>
+                    <p>Laatste Back up: @Virtualmachine.BackUp.LastBackup.ToString()</p>
+                </div>
+            </div>
+        </div>
+        <div class="column is-one-third-widescreen is-half-desktop">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-header-title">VM Periode</h3>
+                </div>
+                <div class="card-body">
+
+                @if (Virtualmachine.Contract != null)
+                {
+                    <p>ID: @Virtualmachine.Contract.Id</p>
+                    <p>Datum start: @Virtualmachine.Contract.StartDate.ToString()</p>
+                      <p>Datum einde: @Virtualmachine.Contract.EndDate.ToString()</p>
+                    }
+                    else
+                    {
+                    <p>Deze VM heeft nog geen contract.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-one-third-widescreen is-half-desktop">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-header-title">Hardware</h3>
+                </div>
+                <div class="card-body">
+                    <p>Memory/RAM: @Virtualmachine.Hardware.Memory GB </p>
+                    <p>Aantal Cores: @Virtualmachine.Hardware.Amount_vCPU</p>
+                    <p>Storage: @(Virtualmachine.Hardware.Storage > 1000 ? (Virtualmachine.Hardware.Storage / 1000.0).ToString() + " GB" : Virtualmachine.Hardware.Storage + " MB")</p>
+                </div>
+            </div>
+        </div>
+        <div class="column is-one-third-widescreen is-half-desktop">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-header-title">Connectie</h3>
+                </div>
+                <div class="card-body">
+                    @if (Virtualmachine.VMConnection is null)
+                    {
+                        <p>Wachtend op goedkeuring.</p>
+                    }
+                    else
+                    {
+                        <p>Server Adres: @Virtualmachine.VMConnection.FQDN</p>
+                        <p>IP-adres: @Virtualmachine.VMConnection.Hostname</p>
+                        <p>Username: @Virtualmachine.VMConnection.Username</p>
+                        <p>Wachtwoord: @Virtualmachine.VMConnection.Password</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <AuthorizeView Policy="Admin">
+        <div>
+            <a @onclick="NavigateToKlant">Naar Klant</a>
+        </div>
+    </AuthorizeView>
+
+
+    @code {
+    public string FormatCapitalLetter(string s)
+    {
+
+        string output = "";
+
+        char[] delimiters = { ' ', '_', '-', '\t' };
+
+
+        string[] splitted = s.Split(delimiters);
+
+        if (splitted.Count() == 0)
+        {
+            try
+            {
+                output = char.ToUpper(s[0]) + s.Substring(1).ToLower();
+            }
+            catch (Exception e)
+            {
+                //name is 1 letter
+                output = s.ToUpper();
+            }
+        }
+        else
+        {
+            foreach (var i in splitted)
+            {
+                if (i.Length == 0)
+                {
+                    continue;
+                }
+                if (i.Length == 1)
+                {
+                    output += i.ToUpper();
+                }
+                if (i.Length > 1)
+                {
+                    output += (char.ToUpper(i[0]) + i.Substring(1).ToLower());
+                }
+                output += " ";
+            }
+        }
+        if (output.Last().Equals(" "))
+        {
+            output.Substring(0, output.Length - 1);
+        }
+        return output;
+
+    }
+}
+}

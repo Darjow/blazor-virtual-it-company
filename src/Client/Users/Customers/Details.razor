@@ -1,0 +1,162 @@
+﻿@page "/klant/{Id:int}"
+
+@attribute [Authorize]
+
+@if (Loading)
+{
+    <div class="card-body center">
+        <span class="icon is-large">
+            <i class="fas fa-lg fa-solid fa-spinner fa-spin"></i>
+        </span>
+    </div>
+}
+else
+    @if (Klant.Id == -1)
+{
+    <p data-test-id="customer-not-allowed">Klant bestaat niet of dit is niet jouw profiel ...</p>
+}
+else
+{
+    <h1 data-test-id="customer-header">Details @Klant.FirstName @Klant.Name</h1>
+    <div>
+        <div class="ml-4">
+            <h2 class="mb-2">Algemene info</h2>
+            <div class="ml-4">
+                <div class="form-check form-switch">
+                    <input @onclick="@Toggle" class="form-check-input" type="checkbox" id="switch" @bind="@Edit" />
+                    <label class="form-check-labelv" for="switch">wijzigen?</label>
+                </div>
+                @if (Intern)
+                {
+                    <h3 class="mb-2 mt-0">Interne Klant</h3>
+                }
+                else
+                {
+                    <h3 class="mb-2 mt-0">Externe Klant</h3>
+                }
+                @if (!Edit)
+                {
+                    <div class="ml-8">
+                        <div>
+                            <label class="label">Voornaam: </label>
+                            <input type="text" readonly class="input" value="@Klant.FirstName">
+                        </div>
+                        <div>
+                            <label class="label">Naam: </label>
+                            <input type="text" readonly class="input" value="@Klant.Name">
+                        </div>
+                        <div>
+                            <label class="label">Email: </label>
+                            <input type="text" readonly class="input" value="@Klant.Email">
+                        </div>
+                        <div>
+                            <label class="label">Gms-nummer: </label>
+                            <input type="text" readonly class="input" value="@Klant.PhoneNumber">
+                        </div>
+                        <div>
+                            @if (Intern)
+                            {
+                                <label class="label">Opleiding : </label>
+                                <input type="text" readonly class="input" value="@Klant.Opleiding">
+                            }
+                            else
+                            {
+                                <label class="label">Bedrijf:</label>
+                                <input type="text" readonly class="input" value="@Klant.Bedrijfsnaam">
+
+                                
+                                @if (Klant.ContactPersoon is not null && Klant.ContactPersoon.Id > 0)
+                                {
+                                    <h3 class="label">Contactpersoon: </h3>
+                                    <div>
+                                        <label class="label">Voornaam:</label>
+                                        <input type="text" readonly class="input" value="@Klant.ContactPersoon.FirstName" />
+                                    </div>
+                                    <div>
+                                        <label class="label">Achternaam:</label>
+                                        <input type="text" readonly class="input" value="@Klant.ContactPersoon.LastName" />
+                                    </div>
+                                    <div>
+                                        <label class="label">Email Contactpersoon</label>
+                                        <input type="text" readonly class="input" value="@Klant.ContactPersoon.Email">
+                                    </div>
+                                    <div>
+                                        <label class="label">Gsm-nummer Contactpersoon</label>
+                                        <input type="text" readonly class="input" value="@Klant.ContactPersoon.PhoneNumber">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="label">Geen contactpersoon</label>
+                                }
+                            }
+                            </div>
+                          <div>
+                        </div>
+                      </div>
+                }
+                else
+                {
+                    <EditForm Model="@model" OnValidSubmit="@EditKlant">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div>
+                            <label class="label">Voornaam: </label>
+                            <InputText class="input" @bind-Value="@model.FirstName" />
+                        </div>
+                        <div>
+                            <label class="label">Naam: </label>
+                            <InputText class="input" @bind-Value="@model.Name" />
+                        </div>
+                        <div class="control">
+                            <label class="label">Email: </label>
+                            <InputText class="input" @bind-Value="@model.Email" />
+                        </div>
+                        <div class="control">
+                            <label class="label">Gms-nummer: </label>
+                            <InputText class="input" @bind-Value="@model.PhoneNumber" />
+                        </div>
+                        @if (model.Opleiding is not null)
+                        {
+                            @*        <div>
+                <label>Opleiding</label>
+                <InputText class="input" @bind-Value="@model.Opleiding"/>
+                </div>*@
+                        }
+                        else
+                        {
+                            <div>
+                                <label class="label">Bedrijf:</label>
+                                <InputText class="input" @bind-Value="@model.Bedrijf" />
+                            </div>
+
+                        }
+                        
+                            <div>
+                                <p class="label">Contactpersoon: </p>
+                                <div>
+                                    <label class="label">Voornaam:</label>
+                                    <InputText class="input" @bind-Value="@model.Contactpersoon.FirstName" />
+                                </div>
+                                <div>
+                                    <label class="label">Achternaam:</label>
+                                    <InputText class="input" @bind-Value="@model.Contactpersoon.LastName" />
+                                </div>
+                            <div>
+                                <label class="label">Email:</label>
+                                <InputText class="input" @bind-Value="@model.Contactpersoon.Email" />
+                            </div>
+                            <div>
+                                <label class="label">Gsm-nummer Contactpersoon</label>
+                                <InputText class="input" @bind-Value="@model.Contactpersoon.PhoneNumber" />
+                            </div>
+                            </div>
+                        
+                        <button class="button mt-2" type="submit" @onclick="@EditKlant">Wijzigen</button>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+
+}

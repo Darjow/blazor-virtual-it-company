@@ -1,0 +1,50 @@
+﻿@page "/klanten"
+@attribute [Authorize("Admin")]
+
+@if (Loading)
+{
+    <div class="card-body center">
+        <span class="icon is-large">
+            <i class="fas fa-lg fa-solid fa-spinner fa-spin"></i>
+        </span>
+    </div>
+}
+else if (Klanten is null || Klanten.Count() == 0)
+{
+
+    <p>Geen klanten...</p>
+}
+else
+{
+    <div class="card-body table is-striped is-hoverable">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Naam</th>
+                    <th>Gsm-nummer</th>
+                    <th>Email</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            @foreach (var kl in Klanten)
+            {
+                <tbody>
+                    <tr>
+                        <td>@kl.Id</td>
+                        <td>@kl.FirstName @kl.Name</td>
+                        <td>@kl.PhoneNumber</td>
+                        <td>@kl.Email</td>
+                        <td>
+                            <button @onclick="() => NavToDetail(kl.Id)">
+                                Details
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            }
+        </table>
+    </div>
+
+}

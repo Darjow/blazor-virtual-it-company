@@ -1,0 +1,40 @@
+﻿@page "/"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Append.Blazor.Sidepanel
+@using System.Security.Claims;
+@inject IJSRuntime jsr
+
+@attribute [Authorize]
+
+
+<h1 class="title is-1">Het Virtual IT Company Webportal</h1
+<AuthorizeView>
+    <Authorized>
+        <p data-test-id="logged-in-name">Hey, @context.User.Identity.Name</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Navigeer via het linker menu naar "Log In" of klik <a href="/login">hier</a> om in te loggen.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+ 
+
+
+ @* <FakeLogin> </FakeLogin> --!>*@
+ 
+@code {
+    [Inject] public ISidepanelService Sidepanel { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+       await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    }
+
+
+    private void ToggleFilterForm()
+    {
+        if (Sidepanel.IsOpen) Sidepanel.Close();
+        else Sidepanel.Open<Client.VirtualMachines.Components.VMFilter>("Virtual Machines", "Filter");
+    }
+}

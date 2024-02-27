@@ -1,0 +1,74 @@
+﻿@page "/beschikbaarheid"
+
+@attribute [Authorize("Admin")]
+<h1 class="is-title-3">Beschikbaarheden op datum</h1>
+
+<div class="container">
+    <div>
+        <i class="fa-solid fa-square-poll-vertical fa-2x" @onclick="Toggle"></i>
+    </div>
+ @if(!_active){
+    <div class="form-container">
+        <div class="flex">
+            <label class="px-4" for="date">Start Datum:</label>
+            <input type="date" name="date" @bind="DateStart" />
+            <label class="px-4" for="date">Eind Datum:</label>
+            <input class="mr-4" type="date" name="date" @bind="DateEnd" />
+            <button class="btn btn-primary" type="submit" @onclick="GetAvailableResources">Submit</button>
+        </div>
+    </div>
+ }
+    @if (loading)
+    {
+        <span class="icon is-large">
+            <i class="fas fa-lg fa-solid fa-spinner fa-spin"></i>
+        </span>
+    }
+    else if (_active)
+    {
+        <div class="graph-container">
+            <Client.Servers.Component.Graph Data="_data" />
+        </div>
+    }
+    else if (Servers is not null && Servers.Count() > 0)
+    {
+        <div class="columns is-desktop is-multiline">
+
+            @foreach (var server in Servers)
+            {
+                <div class="column is-one-third-widescreen is-half-desktop">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-header-title">Server: @server.Id</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Geheugen/Ram: @(server.AvailableHardware.Memory > 1000 ? ((double)server.AvailableHardware.Memory / 1000.00).ToString("#.##") + " GB" : server.AvailableHardware.Memory + " MB")</p>
+                            <p>Opslag: @(server.AvailableHardware.Storage > 1000000 ? ((double)server.AvailableHardware.Storage / 1000000.00).ToString("#.##") + " TB" : server.AvailableHardware.Storage > 1000 ? ((double)server.AvailableHardware.Storage / 1000.00).ToString("#.##") + " GB" : server.AvailableHardware.Storage + " MB")</p>
+                            <p>Aantal Cores: @server.AvailableHardware.Amount_vCPU</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+
+
+@code {
+    private bool _active = false;
+    private bool loading = false;
+
+    private async void Toggle()
+    {
+        _active = !_active;
+
+        if (_data.Count == 0)
+        {
+            loading = true;
+            await GetAvailableResourcesTotal();
+            loading = false;
+        }
+        StateHasChanged();
+    }
+}
